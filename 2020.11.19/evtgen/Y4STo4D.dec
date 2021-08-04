@@ -1,0 +1,51 @@
+##################################################################
+#                    Meleshko Dmytro
+#                       21.05.2019
+#
+#  e+e --> Y(4S) --> D0  anti-D*0  anti-D0  D0  pi0 --> gamma gamma
+#                --> D0  anti-D*0  anti-D0  D0  pi+ pi-
+#                --> D0  anti-D*0  anti-D0  D0  pi+ pi- pi0 --> gamma gamma
+#                    |      |          |     |
+#                    |      |          |      --> K- pi+
+#                    |      |          |
+#                    |      |           --> K- pi+
+#                    |      |
+#                    |       --> anti-D0 pi0 (0.647)
+#                    |       --> anti-D0 gamma (0.353)
+#                    |
+#                     --> K+ pi-
+#
+###################################################################
+#
+#
+# Alias particles for specific decays
+#
+Alias MyD0 D0
+Alias MybarDst anti-D*0
+Alias MybarD0 anti-D0
+#
+Decay Upsilon(4S)
+0.333 MyD0  MybarDst  MybarD0  MyD0  pi0             PHSP;
+0.333 MyD0  MybarDst  MybarD0  MyD0  pi+ pi-         PHSP;
+0.334 MyD0  MybarDst  MybarD0  MyD0  pi+ pi- pi0     PHSP;
+Enddecay
+#
+Decay MyD0
+1.0000  K- pi+                                       PHSP;
+Enddecay
+#
+Decay MybarDst
+0.647    MybarD0  pi0                                 VSS;
+0.353    MybarD0  gamma                         VSP_PWAVE;
+Enddecay
+#
+Decay pi0
+1.0000  gamma gamma                                  PHSP;
+Enddecay
+#
+Decay MybarD0
+1.0000  K+ pi-                                        PHSP;
+Enddecay
+#
+End
+#

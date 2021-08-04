@@ -1,0 +1,63 @@
+##################################################################
+#                    Meleshko Dmytro
+#
+#   e+e --> Vpho --> D0  anti-D*0  anti-D0 + anythig else
+#                    |      |          |     
+#                    |      |           --> K- pi+
+#                    |      |   
+#                    |       --> anti-D0 pi0 (0.647)
+#                    |       --> anti-D0 gamma (0.353)
+#                    |
+#                     --> K+ pi-
+#
+###################################################################
+#
+#
+#JetSetPar PARJ(21)=0.28
+#JetSetPar PARJ(25)=0.27
+#JetSetPar PARJ(26)=0.12
+#JetSetPar PARJ(33)=0.3
+JetSetPar PARJ(41)=0.32
+JetSetPar PARJ(42)=0.62
+#JetSetPar PARJ(81)=0.38
+#JetSetPar PARJ(82)=0.76
+
+#JetSetPar PARP(2)=4.0
+#JetSetPar MSTP(141)=1
+#JetSetPar MSTP(171)=1
+#JetSetPar MSTP(172)=1
+#JetSetPar MSTJ(11)=4
+#JetSetPar PARJ(46)=1.0
+#
+Alias MyDp Dpart
+Alias MyD1 D0
+Alias MyD2 anti-D*0
+Alias MyD3 anti-D0
+#
+Decay vpho
+1.0 MyDp PHSP;
+Enddecay
+#
+Decay MyDp
+1.000 MyD1 MyD2 MyD3 		PHSP;
+Enddecay
+#
+Decay MyD1
+1.0000  K- pi+                  PHSP;
+Enddecay
+#
+Decay MyD3
+1.0000  K+ pi-                  PHSP;
+Enddecay
+#
+Decay MyD2
+0.647    MyD3  pi0               VSS;
+0.353    MyD3  gamma       VSP_PWAVE;
+Enddecay
+#
+Decay pi0
+1.0000  gamma gamma             PHSP;
+Enddecay
+#
+End
+#

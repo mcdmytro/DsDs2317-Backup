@@ -1,0 +1,68 @@
+##################################################################
+#
+#                    Meleshko Dmytro
+#                      17.10.2019
+#
+###################################################################
+#
+#
+JetSetPar PARJ(41)=0.32x
+JetSetPar PARJ(42)=0.62
+#
+Alias MyDsp Dsprt
+Alias MyDs+ D_s+
+Alias MyDs- D_s-
+Alias MyDs2317+ D_s0*+
+Alias MyDs2317- D_s0*-
+Alias MyPhi phi
+Alias MyKst0 K*0
+Alias BarMyKst0 anti-K*0
+#
+Decay vpho
+1.0 MyDsp                       PHSP;
+Enddecay
+#
+Decay MyDsp
+0.500 MyDs+ MyDs2317-           PHSP;
+0.500 MyDs- MyDs2317+           PHSP;
+Enddecay
+#
+Decay MyDs+
+0.3333  MyPhi pi+                SVS;
+0.3333  MyPhi pi+ pi0           PHSP;
+0.3333  BarMyKst0 K+             SVS;
+Enddecay
+#
+Decay MyDs-
+0.3333  MyPhi pi-                SVS;
+0.3333  MyPhi pi- pi0           PHSP;
+0.3333  MyKst0 K-                SVS;
+Enddecay
+#
+Decay BarMyKst0
+1.000 K- pi+                     VSS;
+Enddecay
+#
+Decay MyKst0
+1.000 K+ pi-                     VSS;
+Enddecay
+#
+Decay MyDs2317+
+1.0000  MyDs+ pi0               PHSP;
+Enddecay
+#
+Decay MyDs2317-
+1.0000  MyDs- pi0               PHSP;
+Enddecay
+#
+Decay MyPhi
+1.000 K- K+		         VSS;
+Enddecay
+#
+Decay pi0
+1.0000  gamma gamma             PHSP;
+Enddecay
+#
+End
+#
+

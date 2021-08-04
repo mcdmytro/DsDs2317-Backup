@@ -1,0 +1,171 @@
+#ifndef __CINT__
+#include "RooGlobalFunc.h"
+#endif
+#include "RooRealVar.h"
+#include "RooDataSet.h"
+#include "RooGaussian.h"
+#include "TCanvas.h"
+#include "TAxis.h"
+#include "RooPlot.h"
+#include "TText.h"
+#include "TArrow.h"
+#include "TFile.h"
+
+using namespace RooFit;
+
+void Fit_Dsstar_mass(){
+  gROOT->Reset();
+  gSystem->Load("libRooFit");
+  gStyle->SetCanvasPreferGL(1);
+  
+  Float_t range0=2.037, range1=2.187;
+  Float_t x0=2.097, x1=2.185;
+  RooRealVar *mass = new RooRealVar("mass","",range0,range1);
+  TChain chain("h1");
+  chain.Add("../Ds2460inDs2460_noDsstKmvFit.root");
+
+  Float_t m_dsw, pst_dsw, dgf_dsw, c2_dsw, cn_dsw, m_dsn, pst_dsn, dgf_dsn, c2_dsn, cn_dsn, m_ds60, mc_ds60, pst_ds60, dgf_ds60, c2_ds60, cn_ds60, p_pi0, dgf_pi0, c2_pi0, c2_phin, dgf_phin, c2_phiw, dgf_phiw, c2_pi0n, dgf_pi0n, p_pi0n, c2_pi0w, dgf_pi0w, p_pi0w, c2_kst0, dgf_kst0, p_kst0, mctr, pstg_dss, hel_phi, hel_ds60, cn_dsn, cos60ds, m_dsst; 
+
+  chain.SetBranchAddress("m_dsw", &m_dsw);
+  chain.SetBranchAddress("pst_dsw", &pst_dsw);
+  chain.SetBranchAddress("dgf_dsw", &dgf_dsw);
+  chain.SetBranchAddress("c2_dsw", &c2_dsw);
+  chain.SetBranchAddress("cn_dsw", &cn_dsw);
+  chain.SetBranchAddress("m_dsn", &m_dsn);
+  chain.SetBranchAddress("pst_dsn", &pst_dsn);
+  chain.SetBranchAddress("dgf_dsn", &dgf_dsn);
+  chain.SetBranchAddress("c2_dsn", &c2_dsn);
+  chain.SetBranchAddress("cn_dsn", &cn_dsn);
+  chain.SetBranchAddress("m_ds60", &m_ds60);
+  chain.SetBranchAddress("mc_ds60", &mc_ds60);
+  chain.SetBranchAddress("pst_ds60", &pst_ds60);
+  chain.SetBranchAddress("dgf_ds60", &dgf_ds60);
+  chain.SetBranchAddress("c2_ds60", &c2_ds60);
+  chain.SetBranchAddress("cn_ds60", &cn_ds60);
+  chain.SetBranchAddress("p_pi0", &p_pi0);
+  chain.SetBranchAddress("dgf_pi0", &dgf_pi0);
+  chain.SetBranchAddress("c2_pi0", &c2_pi0);
+  chain.SetBranchAddress("dgf_phin", &dgf_phin);
+  chain.SetBranchAddress("c2_phin", &c2_phin);
+  chain.SetBranchAddress("dgf_phiw", &dgf_phiw);
+  chain.SetBranchAddress("c2_phiw", &c2_phiw);
+  chain.SetBranchAddress("c2_pi0w", &c2_pi0w);
+  chain.SetBranchAddress("dgf_pi0w", &dgf_pi0w);
+  chain.SetBranchAddress("p_pi0w", &p_pi0w);
+  chain.SetBranchAddress("c2_pi0n", &c2_pi0n);
+  chain.SetBranchAddress("dgf_pi0n", &dgf_pi0n);
+  chain.SetBranchAddress("p_pi0n", &p_pi0n);
+  chain.SetBranchAddress("c2_kst0", &c2_kst0);
+  chain.SetBranchAddress("dgf_kst0", &dgf_kst0);
+  chain.SetBranchAddress("p_kst0", &p_kst0);
+  chain.SetBranchAddress("mctr", &mctr);
+  chain.SetBranchAddress("pstg_dss", &pstg_dss);
+  chain.SetBranchAddress("hel_phi", &hel_phi);
+  chain.SetBranchAddress("hel_ds60", &hel_ds60);
+  chain.SetBranchAddress("cn_dsn", &cn_dsn);
+  chain.SetBranchAddress("cos60ds", &cos60ds);
+  chain.SetBranchAddress("m_dsst", &m_dsst);
+
+  RooDataSet *data = new RooDataSet("data","", RooArgSet(*mass),"GeV");
+
+  for (int i=0; i<chain.GetEntries();i++){
+    chain.GetEntry(i);
+    if(m_dsst>range0 && m_dsst<range1 && pstg_dss>0.1 && TMath::Abs(hel_phi)>0.35 && hel_ds60<0.7 && (cn_dsn==1 || cn_dsn==3)){
+      mass->setVal(m_dsst);
+      data->add(RooArgSet(*mass));
+    }}
+  //TMath::Abs(mc_ds60)==20433 
+
+  RooRealVar *mean  = new RooRealVar("mean", "sgn mean", 2.112, 2.097, 2.127);
+  RooRealVar *sigma = new RooRealVar("sigma", "Sigma of gaussian",0.005, 0.003, 0.015);
+  RooGaussian *gaus= new RooGaussian("gaus1", "Gaussian PDF", *mass, *mean, *sigma);
+  
+  RooRealVar *a0 = new RooRealVar("a0","a0",0.,-100.,100.);
+  RooRealVar *a1 = new RooRealVar("a1","a1",0.,-100.,100.);
+  RooRealVar *a2 = new RooRealVar("a2","a2",0.,-100.,100.);
+  RooRealVar *a3 = new RooRealVar("a3","a3",0.,-100.,100.);
+  RooPolynomial *Pol = new RooPolynomial("Pol","Polynomial for background",*mass, RooArgList(*a0,*a1,*a2, *a3));
+
+  RooRealVar *bkg = new RooRealVar("Npol bkg", "", 0., 1E5); 
+  RooRealVar *sig = new RooRealVar("Nsig", "N true signal", 0, 1E4);
+   
+  RooAddPdf *pdf = new RooAddPdf ("pdf", "Gaussian + Pol",RooArgList(*gaus, *Pol), RooArgList(*sig, *bkg));     
+
+  TCanvas *cv=new TCanvas("cv","Just Canvas",5,5,800,800);
+  // Define "signal" range in x as [x0,x1]
+  mass->setRange("signal",x0,x1) ;
+  // Fit pdf only to data in "signal" range
+  RooFitResult *fitresult = pdf->fitTo(*data, Extended(kTRUE), Minos(kFALSE), Save(kTRUE), Range("signal")) ;
+  //RooFitResult *fitresult = pdf->fitTo(*data);
+  RooPlot *frame = mass->frame();
+  data->plotOn(frame);
+  gPad->SetLeftMargin(0.2);
+  gPad->SetBottomMargin(0.12) ;
+  frame->SetTitle("");
+  frame->GetXaxis()->SetTitle("M(D_{s}#gamma), GeV ");
+  //frame->GetYaxis()->SetTitle("Entries");
+  frame->GetXaxis()->SetTitleSize(0.05);
+  frame->GetYaxis()->SetTitleSize(0.05);
+  frame->GetXaxis()->SetLabelSize(0.05);
+  frame->GetYaxis()->SetLabelSize(0.05);
+  frame->GetXaxis()->SetNdivisions(505);
+  frame->GetYaxis()->SetNdivisions(505);
+  frame->GetYaxis()->SetTitleOffset(1.8);
+  //frame->GetXaxis()->SetTitleOffset(0.8);
+  // frame->SetFillColor(kYellow-8);
+  
+  TPaveText* txt = new TPaveText(0.8,0.8,0.85,0.85,"blNDC");
+  txt->SetBorderSize(0);
+  txt->SetFillColor(0);
+  txt->SetTextSize(0.05);
+  txt->SetTextFont(80);
+  txt->AddText("(b)") ;
+  frame->addObject(txt);
+  
+
+  TLine *vl_sgn_left = new TLine(2.0995,0,2.0995,1600);
+  vl_sgn_left->SetLineColor(kRed);
+  frame->addObject(vl_sgn_left);
+  TLine *vl_sgn_right = new TLine(2.1245,0,2.1245,1600);
+  vl_sgn_right->SetLineColor(kRed);
+  frame->addObject(vl_sgn_right);
+  TBox *box_sgn = new TBox(2.0995, 0, 2.1245, 1600);
+  box_sgn->SetFillColorAlpha(kRed-4, 0.15);
+  frame->addObject(box_sgn);
+
+  TLine *vl_sb_left = new TLine(2.1245,0,2.1245,1600);
+  vl_sb_left->SetLineColor(kBlue);
+  frame->addObject(vl_sb_left);
+  TLine *vl_sb_right = new TLine(2.185,0,2.185,1600);
+  vl_sb_right->SetLineColor(kBlue);
+  frame->addObject(vl_sb_right);
+  TBox *box_sb = new TBox(2.1245, 0, 2.185, 1600);
+  box_sb->SetFillColorAlpha(kBlue-4, 0.15);
+  frame->addObject(box_sb);
+
+  //gaus->paramOn(frame,Layout(0.56,0.89,0.89));
+  //pdf->paramOn(frame, Format("NELU", FixedPrecision(2)) ,Layout(0.69,0.99,0.99));
+  /*
+  pdf->paramOn(frame, Format("NELU", 1) ,Layout(0.6,0.99,0.99));
+  frame->getAttText()->SetTextSize(0.025);
+  frame->getAttLine()->SetLineWidth(0);
+  */
+  pdf->plotOn(frame);
+  pdf->plotOn(frame,Components(RooArgSet(*gaus)),LineColor(kYellow-2),LineStyle(kDashed));
+  pdf->plotOn(frame,Components(RooArgSet(*Pol)),LineColor(kRed),LineStyle(kDashed));
+  
+  //pdf->plotOn(frame,Components(RooArgSet(*gaus2)),LineColor(kGreen+3),LineStyle(kDashed));
+  frame->Draw();
+
+  mass->setRange("pureSGN",2.0995,2.1245);
+  mass->setRange("sb",2.131,2.185);
+  
+  RooAbsReal* int_sig = Pol->createIntegral(*mass,Range("pureSGN"));
+  RooAbsReal* int_sb = Pol->createIntegral(*mass,Range("sb"));
+  
+  cout << "Signal region integral: " << '\t' << int_sig->getVal() << '\n';
+  cout <<"Sideband region integral: " << '\t' << int_sb->getVal() << '\n';
+  
+  cv->SaveAs("SMC_Dsst_sbMass_ready.pdf","pdf");
+  fitresult->Print("v");
+}

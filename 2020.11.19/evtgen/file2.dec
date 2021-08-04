@@ -1,0 +1,46 @@
+##################################################################
+#                    Meleshko Dmytro
+#
+#  e+e --> Y(4S) --> D0  anti-D*0  anti-D0  pi0
+#                    |      |          |     |
+#                    |      |          |      --> gamma gamma
+#                    |      |          |
+#                    |      |           --> K- pi+
+#                    |      |   
+#                    |       --> anti-D0 pi0 (0.647)
+#                    |       --> anti-D0 gamma (0.353)
+#                    |
+#                     --> K+ pi-
+#
+###################################################################
+#
+#
+# Alias particles for specific decays
+#
+Alias MyD1 D0
+Alias MyD2 anti-D*0
+Alias MyD3 anti-D0
+#
+Decay Upsilon(4S)
+1.000 MyD1  MyD2  MyD3  pi0         PHSP;
+Enddecay
+#
+Decay MyD1
+1.0000  K- pi+                     PHSP;
+Enddecay
+#
+Decay MyD3
+1.0000  K+ pi-                     PHSP;
+Enddecay
+#
+Decay MyD2
+0.647    MyD3  pi0                        VSS;
+0.353    MyD3  gamma                      VSP_PWAVE;
+Enddecay
+#
+Decay pi0
+1.0000  gamma gamma                 PHSP;
+Enddecay
+#
+End
+#

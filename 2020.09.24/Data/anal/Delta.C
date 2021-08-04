@@ -1,0 +1,162 @@
+#ifndef __CINT__
+#include "RooGlobalFunc.h"
+#endif
+#include "RooRealVar.h"
+#include "RooDataSet.h"
+#include "RooBreitWigner.h"
+#include "RooGaussian.h"
+#include "TCanvas.h"
+#include "TAxis.h"
+#include "RooPlot.h"
+#include "TText.h"
+#include "TArrow.h"
+#include "TFile.h"
+
+using namespace RooFit;
+
+void Delta(){
+gROOT->Reset();
+gSystem->Load("libRooFit");
+Float_t range0=0.15, range1=0.60;
+Float_t x0=0.24, x1=0.5;
+RooRealVar *mass = new RooRealVar("mass","",range0,range1);
+TChain chain("h1");
+chain.Add("../3modesPID_all.root");
+
+ Float_t mctruth, cos, R2, helicity,pst_dsi, m_dsi, dgf_dsi, chi2_dsi, cn_dsi, pst_ds17, m_ds17, dgf_ds17, chi2_ds17,pst_dsii, m_dsii, dgf_dsii, chi2_dsii, cn_dsii, ppi, dgf_pi, chi2_pi, dgf_phi1, chi2_phi1, dgf_phi2, chi2_phi2, chi2_ipi, dgf_ipi, pipi, chi2_iipi, dgf_iipi, piipi, chi2_kst, dgf_kst, pkst, k1_id, k2_id, k3_id, k4_id, pi1_id, pi2_id, mc_ds17, mc_dsi;
+
+chain.SetBranchAddress("m_dsi", &m_dsi);
+chain.SetBranchAddress("pst_dsi", &pst_dsi);
+chain.SetBranchAddress("dgf_dsi", &dgf_dsi);
+chain.SetBranchAddress("c2_dsi", &chi2_dsi);
+chain.SetBranchAddress("cn_dsi", &cn_dsi);
+chain.SetBranchAddress("m_dsii", &m_dsii);
+chain.SetBranchAddress("pst_dsii", &pst_dsii);
+chain.SetBranchAddress("dgf_dsii", &dgf_dsii);
+chain.SetBranchAddress("c2_dsii", &chi2_dsii);
+chain.SetBranchAddress("cn_dsii", &cn_dsii);
+chain.SetBranchAddress("m_ds17", &m_ds17);
+chain.SetBranchAddress("pst_ds17", &pst_ds17);
+chain.SetBranchAddress("dgf_ds17", &dgf_ds17);
+chain.SetBranchAddress("c2_ds17", &chi2_ds17);
+chain.SetBranchAddress("p_pi0", &ppi);
+chain.SetBranchAddress("dgf_pi0", &dgf_pi);
+chain.SetBranchAddress("c2_pi0", &chi2_pi);
+chain.SetBranchAddress("dgf_phi1", &dgf_phi1);
+chain.SetBranchAddress("c2_phi1", &chi2_phi1);
+chain.SetBranchAddress("dgf_phi2", &dgf_phi2);
+chain.SetBranchAddress("c2_phi2", &chi2_phi2);
+chain.SetBranchAddress("c2_ipi", &chi2_ipi);
+chain.SetBranchAddress("dgf_ipi", &dgf_ipi);
+chain.SetBranchAddress("p_ipi", &pipi);
+chain.SetBranchAddress("c2_iipi", &chi2_iipi);
+chain.SetBranchAddress("dgf_iipi", &dgf_iipi);
+chain.SetBranchAddress("p_iipi", &piipi);
+ chain.SetBranchAddress("c2_kst0", &chi2_kst);
+ chain.SetBranchAddress("dgf_kst0", &dgf_kst);
+ chain.SetBranchAddress("p_kst0", &pkst);
+chain.SetBranchAddress("mctr", &mctruth);
+chain.SetBranchAddress("cos0", &cos);
+chain.SetBranchAddress("r2", &R2);
+//chain.SetBranchAddress("hel", &helicity);
+chain.SetBranchAddress("k1_id", &k1_id);
+chain.SetBranchAddress("k2_id", &k2_id);
+chain.SetBranchAddress("k3_id", &k3_id);
+chain.SetBranchAddress("k4_id", &k4_id);
+chain.SetBranchAddress("pi1_id", &pi1_id);
+chain.SetBranchAddress("pi2_id", &pi2_id);
+chain.SetBranchAddress("mc_ds17", &mc_ds17);
+chain.SetBranchAddress("mc_dsi", &mc_dsi);
+
+RooDataSet *data = new RooDataSet("data","", RooArgSet(*mass),"GeV");
+/*
+for (int i=0; i<chain.GetEntries();i++){
+  chain.GetEntry(i);
+  if(m_dsi>range0 && m_dsi<range1 && pst_dsi>2.5 && TMath::Prob(chi2_dsi, dgf_dsi)>0.001){
+    mass->setVal(m_dsi);
+    data->add(RooArgSet(*mass));
+  }}
+*/
+// k1_id>0 && k2_id>0 && k3_id>0 && k4_id>0 && pi1_id<1 && pi2_id<1 &&
+// mc_ds17==10431
+
+for (int i=0; i<chain.GetEntries();i++){
+  chain.GetEntry(i);
+  if((m_ds17-m_dsii)>range0 && (m_ds17-m_dsii)<range1 & pst_ds17>3.5 && pst_dsii>2.5 && TMath::Prob(chi2_ds17, dgf_ds17)>0.001 && TMath::Prob(chi2_dsii, dgf_dsii)>0.001 && TMath::Prob(chi2_pi, dgf_pi)>0.01 && ((cn_dsii!=2) || (cn_dsii==2 && TMath::Prob(chi2_iipi, dgf_iipi)>0.1 && TMath::Prob(chi2_kst,dgf_kst)>0.1 && piipi>0.3))){
+    mass->setVal(m_ds17-m_dsii);
+    data->add(RooArgSet(*mass));
+  }}
+
+//  WITH EXTRA CUTS
+/*
+for (int i=0; i<chain.GetEntries();i++){
+  chain.GetEntry(i);
+  if(m_ds17>range0 && m_ds17<range1 && ppi>0.35 && pst_ds17>3.2 && pst_dsii>2.2 && TMath::Prob(chi2_ds17, dgf_ds17)>0.001 && TMath::Prob(chi2_dsii, dgf_dsii)>0.001 && TMath::Prob(chi2_pi, dgf_pi)>0.01 &&  TMath::Abs(helicity)>0.5 && ((cn_dsii!=2) || (cn_dsii==2 && TMath::Prob(chi2_iipi, dgf_iipi)>0.1 && TMath::Prob(chi2_kst,dgf_kst)>0.1 && piipi>0.3))){
+    mass->setVal(m_ds17);
+    data->add(RooArgSet(*mass));
+  }}
+*/
+  //RooRealVar *mean = new RooRealVar("mean", "Mean of gaussian",1.9685,1.9,2.0,"GeV");
+  RooRealVar *mean = new RooRealVar("mean", "Mean of gaussian",0.3461,0.34,0.35,"GeV");
+  RooRealVar *sigma=new RooRealVar("sigma", "Sigma of gaussian",0.0006,0.0003,0.01,"GeV");
+  RooGaussian *gaus= new RooGaussian("gaus", "Gaussian for signal", *mass, *mean, *sigma);
+
+  RooRealVar *bw_w = new RooRealVar("bw_w","",0.006,0.003,0.01,"GeV");
+  RooBreitWigner *bw = new RooBreitWigner("bw","Breit-Wigner function fit",*mass,*mean, *bw_w);
+
+  RooRealVar *a0 = new RooRealVar("a0","a0",1.,-10.,10.);
+  RooRealVar *a1 = new RooRealVar("a1","a1",1.,-10.,10.);
+  RooRealVar *a2 = new RooRealVar("a2","a2",1.,-10.,10.);
+  RooRealVar *a3 = new RooRealVar("a3","a3",1.,-10.,10.);
+  RooRealVar *a4 = new RooRealVar("a4","a4",1.,-10.,10.);
+  RooRealVar *a5 = new RooRealVar("a5","a5",1.,-10.,10.);
+  RooRealVar *a6 = new RooRealVar("a6","a6",1.,-10.,10.);
+  RooPolynomial *Pol = new RooPolynomial("Pol","Polynomial for background",*mass, *a0) ;
+  RooChebychev *cpol = new RooChebychev("cpol","cpol",*mass,RooArgList(*a0,*a1));
+
+  RooRealVar *GZ = new RooRealVar("GZ","Z width", 0.006, 0.003, 0.01,"GeV");
+  RooVoigtian *voigt = new RooVoigtian("voigt","Reconstructed peak", *mass, *mean, *GZ, *sigma);
+ 
+  RooRealVar *sig = new RooRealVar("Nsig", "", 0, 1E6);
+  RooRealVar *bkg = new RooRealVar("Nbkg", "", 0, 1E6);
+
+  RooAddPdf *pdf = new RooAddPdf ("pdf", "gaus + Pol",RooArgList(*gaus, *Pol), RooArgList(*sig, *bkg));
+
+  TCanvas *cv=new TCanvas("cv","Just Canvas",5,5,800,800);
+  // Define "signal" range in x as [x0,x1]
+  mass.setRange("signal",x0,x1) ;  
+  // Fit pdf only to data in "signal" range
+  RooFitResult *fitresult = pdf->fitTo(*data,Save(kTRUE),Range("signal")) ;
+  //RooFitResult *fitresult = pdf->fitTo(*data);
+  RooPlot *frame = mass->frame(Bins(100));
+  data->plotOn(frame);
+  gPad->SetLeftMargin(0.2);
+  gPad->SetBottomMargin(0.12) ;
+  frame->SetTitle("");
+  frame->GetXaxis()->SetTitle("Mass, GeV ");
+  //frame->GetYaxis()->SetTitle("Entries");
+  frame->GetXaxis()->SetTitleSize(0.05);
+  frame->GetYaxis()->SetTitleSize(0.05);
+  frame->GetXaxis()->SetLabelSize(0.05);
+  frame->GetYaxis()->SetLabelSize(0.05);
+  frame->GetXaxis()->SetNdivisions(505);
+  frame->GetYaxis()->SetNdivisions(505);
+  frame->GetYaxis()->SetTitleOffset(1.8);
+  //xframe->GetXaxis()->SetTitleOffset(0.8);
+  // frame->SetFillColor(kYellow-8);
+  
+  //gaus->paramOn(frame,Layout(0.56,0.89,0.89));
+  pdf->paramOn(frame, Format("NELU", FixedPrecision(2)) ,Layout(0.69,0.99,0.99));
+  //pdf->paramOn(frame, Format("NEU", 1) ,Layout(0.64,0.99,0.99));
+  frame->getAttText()->SetTextSize(0.025);
+  frame->getAttLine()->SetLineWidth(0);
+
+  pdf->plotOn(frame);
+  pdf->plotOn(frame,Components(RooArgSet(*bw)),LineColor(kYellow-2),LineStyle(kDashed));
+  pdf->plotOn(frame,Components(RooArgSet(*Pol)),LineColor(kRed),LineStyle(kDashed));
+  frame->Draw();
+  
+  std::cout<<"chi^2 = "<< frame->chiSquare() <<std::endl;
+  cv->SaveAs("CMC_Delta_mass.pdf","pdf");
+
+}
