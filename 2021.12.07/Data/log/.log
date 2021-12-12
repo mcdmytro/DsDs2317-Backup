@@ -1,0 +1,204 @@
+Sender: LSF System <lsfadmin@cb040>
+Subject: Job 58144932: <./Run_MyMC.sh awk {$1} path.txt> in cluster <centralcluster> Done
+
+Job <./Run_MyMC.sh awk {$1} path.txt> was submitted from host <cw06> by user <yuonish> in cluster <centralcluster> at Wed Apr 24 00:19:09 2019
+Job was executed on host(s) <cb040>, in queue <s>, as user <yuonish> in cluster <centralcluster> at Wed Apr 24 00:19:10 2019
+</home/belle/yuonish> was used as the home directory.
+</home/belle/yuonish/dmytro/reco/ccbar_reco> was used as the working directory.
+Started at Wed Apr 24 00:19:10 2019
+Terminated at Wed Apr 24 00:19:12 2019
+Results reported at Wed Apr 24 00:19:12 2019
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+./Run_MyMC.sh awk {$1} path.txt
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.50 sec.
+    Max Memory :                                 20 MB
+    Average Memory :                             20.00 MB
+    Total Requested Memory :                     4000.00 MB
+    Delta Memory :                               3980.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   1 sec.
+    Turnaround time :                            3 sec.
+
+The output (if any) follows:
+
+# create analysis path
+path create analysis
+# register modules, User_reco is your module
+module register fix_mdst User_reco user_index
+path add_module main fix_mdst  User_reco user_index
+# conditions (aka status)
+path add_condition main <:0:KILL
+path add_condition analysis ==:0:KILL
+
+
+initialize
+# define output histogram, folder histos_MC MUST be createds
+output open idx_files/awk.idx
+histogram define  histos/awk.hbk
+
+
+
+# process_url http://bweb3/mdst.php?ex=&rs=&re=&skm=HadronBorJ&dt=on_resonanc<mdst.php?ex=&rs=&re=&skm=HadronBorJ&dt=on_resonance                         &bl=caseB
+# process_event /group/belle/bdata_b/dstprod/dat/e0000/HadronBJ/1205/on_reson<e/bdata_b/dstprod/dat/e0000/HadronBJ/1205/on_resona                         nce/00/e000021r000002-b20<0/HadronBJ/1205/on_resonance/00/e000021r000002-b200                         21205_1443.mdst 0
+
+# process url, format is self_explanatory, you can get fixed string at bweb3.<lf_explanatory, you can get fixed string at bweb3.c                         c.kekjp
+# process_url http://bweb3/montecarlo.php?ex=&rs=&re=&dt=on_resonance&bl=case<montecarlo.php?ex=&rs=&re=&dt=on_resonance&bl=caseB                         &ty=Any&st=
+
+process_event awk 0
+ERR    : Basf_io_disk::v_open:cannot stat awk
+EVS - error in opening a file.
+event_server - error in opening input file: awk
+-------------------------- BASF Execution Statistics ------------------------------------
+      Module         |       CPU time(sec)         |   # of calls     | CPU time/call
+---------------------+-----------------------------+------------------+------------------
+    fix_mdst         |             0               |           0
+    User_reco        |             0               |           0
+    user_index       |             0               |           0
+---------------------+-----------------------------+------------------+------------------
+ Total CPU time(sec) |             0(       0)                        |       0.000
+---------------------+-----------------------------+------------------+------------------
+output close
+RESULT : Basf_io:md5::ac812058e3b1de081fb8aa5d7dbcc1cc  idx_files/awk.idx
+
+terminate
+Total On4S lum. =             0 Continuum Lum. =             0 3S Lum. =             0 Above4S Lum. =             0 Other Lum. =             0
+ RZMAKE. new RZ format selected.
+         This file will not be readable with versions of RZ prior to release 94B
+ RZOPEN. Cannot determine record length -  EXCHANGE mode is used.
+ Converting directory //example
+ Converting RWN with ID= 1, nentries = 0
+ Converting RWN with ID= 2, nentries = 0
+ Converting RWN with ID= 3, nentries = 0
+ Converting RWN with ID= 4, nentries = 0
+ Converting RWN with ID= 5, nentries = 0
+ Converting RWN with ID= 6, nentries = 0
+ Converting RWN with ID= 7, nentries = 0
+ Converting RWN with ID= 8, nentries = 0
+ Converting RWN with ID= 9, nentries = 0
+ Converting RWN with ID= 10, nentries = 0
+TFile**		root_files/awk.root	HBOOK file: histos/awk.hbk converted to ROOT
+ TFile*		root_files/awk.root	HBOOK file: histos/awk.hbk converted to ROOT
+  KEY: TTree	h1;1	first
+  KEY: TTree	h2;1	secnd
+  KEY: TTree	h3;1	third
+  KEY: TTree	h4;1	fourt
+  KEY: TTree	h5;1	fifth
+  KEY: TTree	h6;1	sixth
+  KEY: TTree	h7;1	svnth
+  KEY: TTree	h8;1	eight
+  KEY: TTree	h9;1	ninth
+  KEY: TTree	h10;1	tenth
+Sender: LSF System <lsfadmin@cb039>
+Subject: Job 58145115: <./Run_MyMC.sh awk {$1} path.txt> in cluster <centralcluster> Done
+
+Job <./Run_MyMC.sh awk {$1} path.txt> was submitted from host <cw06> by user <yuonish> in cluster <centralcluster> at Wed Apr 24 00:21:09 2019
+Job was executed on host(s) <cb039>, in queue <s>, as user <yuonish> in cluster <centralcluster> at Wed Apr 24 00:21:11 2019
+</home/belle/yuonish> was used as the home directory.
+</home/belle/yuonish/dmytro/reco/ccbar_reco> was used as the working directory.
+Started at Wed Apr 24 00:21:11 2019
+Terminated at Wed Apr 24 00:21:12 2019
+Results reported at Wed Apr 24 00:21:12 2019
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+./Run_MyMC.sh awk {$1} path.txt
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   0.49 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     4000.00 MB
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   2 sec.
+    Turnaround time :                            3 sec.
+
+The output (if any) follows:
+
+# create analysis path
+path create analysis
+# register modules, User_reco is your module
+module register fix_mdst User_reco user_index
+path add_module main fix_mdst  User_reco user_index
+# conditions (aka status)
+path add_condition main <:0:KILL
+path add_condition analysis ==:0:KILL
+
+
+initialize
+# define output histogram, folder histos_MC MUST be createds
+output open idx_files/awk.idx
+histogram define  histos/awk.hbk
+
+
+
+# process_url http://bweb3/mdst.php?ex=&rs=&re=&skm=HadronBorJ&dt=on_resonanc<mdst.php?ex=&rs=&re=&skm=HadronBorJ&dt=on_resonance                         &bl=caseB
+# process_event /group/belle/bdata_b/dstprod/dat/e0000/HadronBJ/1205/on_reson<e/bdata_b/dstprod/dat/e0000/HadronBJ/1205/on_resona                         nce/00/e000021r000002-b20<0/HadronBJ/1205/on_resonance/00/e000021r000002-b200                         21205_1443.mdst 0
+
+# process url, format is self_explanatory, you can get fixed string at bweb3.<lf_explanatory, you can get fixed string at bweb3.c                         c.kekjp
+# process_url http://bweb3/montecarlo.php?ex=&rs=&re=&dt=on_resonance&bl=case<montecarlo.php?ex=&rs=&re=&dt=on_resonance&bl=caseB                         &ty=Any&st=
+
+process_event awk 0
+ERR    : Basf_io_disk::v_open:cannot stat awk
+EVS - error in opening a file.
+event_server - error in opening input file: awk
+-------------------------- BASF Execution Statistics ------------------------------------
+      Module         |       CPU time(sec)         |   # of calls     | CPU time/call
+---------------------+-----------------------------+------------------+------------------
+    fix_mdst         |             0               |           0
+    User_reco        |             0               |           0
+    user_index       |             0               |           0
+---------------------+-----------------------------+------------------+------------------
+ Total CPU time(sec) |             0(       0)                        |       0.000
+---------------------+-----------------------------+------------------+------------------
+output close
+RESULT : Basf_io:md5::ac812058e3b1de081fb8aa5d7dbcc1cc  idx_files/awk.idx
+
+terminate
+Total On4S lum. =             0 Continuum Lum. =             0 3S Lum. =             0 Above4S Lum. =             0 Other Lum. =             0
+ RZMAKE. new RZ format selected.
+         This file will not be readable with versions of RZ prior to release 94B
+ RZOPEN. Cannot determine record length -  EXCHANGE mode is used.
+ Converting directory //example
+ Converting RWN with ID= 1, nentries = 0
+ Converting RWN with ID= 2, nentries = 0
+ Converting RWN with ID= 3, nentries = 0
+ Converting RWN with ID= 4, nentries = 0
+ Converting RWN with ID= 5, nentries = 0
+ Converting RWN with ID= 6, nentries = 0
+ Converting RWN with ID= 7, nentries = 0
+ Converting RWN with ID= 8, nentries = 0
+ Converting RWN with ID= 9, nentries = 0
+ Converting RWN with ID= 10, nentries = 0
+TFile**		root_files/awk.root	HBOOK file: histos/awk.hbk converted to ROOT
+ TFile*		root_files/awk.root	HBOOK file: histos/awk.hbk converted to ROOT
+  KEY: TTree	h1;1	first
+  KEY: TTree	h2;1	secnd
+  KEY: TTree	h3;1	third
+  KEY: TTree	h4;1	fourt
+  KEY: TTree	h5;1	fifth
+  KEY: TTree	h6;1	sixth
+  KEY: TTree	h7;1	svnth
+  KEY: TTree	h8;1	eight
+  KEY: TTree	h9;1	ninth
+  KEY: TTree	h10;1	tenth

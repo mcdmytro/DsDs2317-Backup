@@ -1,0 +1,14 @@
+#Run it locally
+$ cd ~/.ssh/
+$ ssh-keygen
+--> kek --> ENTER
+--> ENTER
+$ ssh-copy-id meleshko@sshcc1.kek.jp
+
+#Move to the intermediate server
+$ ssh meleshko@sshcc1.kek.jp
+$ cd ~/.ssh/
+$ ssh-keygen
+--> kek2 --> ENTER
+--> ENTER
+$ ssh-copy-id -i kek2.pub meleshko@login.cc.kek.jp

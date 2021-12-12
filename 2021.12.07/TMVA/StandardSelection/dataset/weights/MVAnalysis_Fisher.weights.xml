@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<MethodSetup Method="Fisher::Fisher">
+  <GeneralInfo>
+    <Info name="TMVA Release" value="4.2.1 [262657]"/>
+    <Info name="ROOT Release" value="6.22/02 [398850]"/>
+    <Info name="Creator" value="mcdmytro"/>
+    <Info name="Date" value="Thu Dec  2 18:01:58 2021"/>
+    <Info name="Host" value="Linux MSI 5.10.16.3-microsoft-standard-WSL2 #1 SMP Fri Apr 2 22:23:49 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux"/>
+    <Info name="Dir" value="/mnt/c/shared/DsDs2317-GitSynch/DsDs2317-study/TMVA/PreSelectionApplied"/>
+    <Info name="Training events" value="5000"/>
+    <Info name="TrainingTime" value="6.59680367e-03"/>
+    <Info name="AnalysisType" value="Classification"/>
+  </GeneralInfo>
+  <Options>
+    <Option name="V" modified="Yes">False</Option>
+    <Option name="VerbosityLevel" modified="No">Default</Option>
+    <Option name="VarTransform" modified="No">None</Option>
+    <Option name="H" modified="Yes">True</Option>
+    <Option name="CreateMVAPdfs" modified="Yes">True</Option>
+    <Option name="IgnoreNegWeightsInTraining" modified="No">False</Option>
+    <Option name="Method" modified="Yes">Fisher</Option>
+  </Options>
+  <Variables NVar="5">
+    <Variable VarIndex="0" Expression="pst_ds17" Label="pst_ds17" Title="pst_ds17" Unit="" Internal="pst_ds17" Type="F" Min="7.04832673e-02" Max="4.73005152e+00"/>
+    <Variable VarIndex="1" Expression="hel_phi" Label="hel_phi" Title="hel_phi" Unit="" Internal="hel_phi" Type="F" Min="1.75855341e-04" Max="9.99992073e-01"/>
+    <Variable VarIndex="2" Expression="pc2_ds17" Label="pc2_ds17" Title="pc2_ds17" Unit="" Internal="pc2_ds17" Type="F" Min="0.00000000e+00" Max="9.99999940e-01"/>
+    <Variable VarIndex="3" Expression="pc2_dsii" Label="pc2_dsii" Title="pc2_dsii" Unit="" Internal="pc2_dsii" Type="F" Min="0.00000000e+00" Max="9.99359250e-01"/>
+    <Variable VarIndex="4" Expression="pc2_pi0" Label="pc2_pi0" Title="pc2_pi0" Unit="" Internal="pc2_pi0" Type="F" Min="5.58792195e-08" Max="1.00000000e+00"/>
+  </Variables>
+  <Spectators NSpec="2">
+    <Spectator SpecIndex="0" Expression="dm_ds17" Label="dm_ds17" Title="F" Unit="" Internal="dm_ds17" Type="F" Min="2.50198841e-01" Max="4.49937463e-01"/>
+    <Spectator SpecIndex="1" Expression="mc_ds17" Label="mc_ds17" Title="F" Unit="" Internal="mc_ds17" Type="F" Min="0.00000000e+00" Max="1.04310000e+04"/>
+  </Spectators>
+  <Classes NClass="2">
+    <Class Name="Signal" Index="0"/>
+    <Class Name="Background" Index="1"/>
+  </Classes>
+  <Transformations NTransformations="0"/>
+  <MVAPdfs>
+    <PDF Name="Fisher_PDFSig" MinNSmooth="10" MaxNSmooth="10" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+      <Histogram Name="Fisher_tr_S_original" NBins="50" XMin="-1.6680936813354492e+00" XMax="1.6556574106216431e+00" HasEquidistantBins="1">
+        0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 1.20394113e-02 6.01970564e-03 0.00000000e+00 1.80591169e-02 1.80591169e-02 3.61182339e-02 3.00985282e-02 4.21379395e-02 6.62167621e-02 5.41773508e-02 1.26413818e-01 1.98650286e-01 2.46807931e-01 1.98650286e-01 3.49142927e-01 3.79241455e-01 4.33418806e-01 4.51477923e-01 6.01970564e-01 7.16344971e-01 6.26049387e-01 8.06640556e-01 8.12660262e-01 9.14995258e-01 9.02955846e-01 8.00620850e-01 8.18679967e-01 8.96936141e-01 9.75192314e-01 7.10325266e-01 7.58482911e-01 6.50128209e-01 4.21379395e-01 3.97300572e-01 2.22729109e-01 1.26413818e-01 9.63152903e-02 9.02955846e-02 2.40788226e-02 6.01970564e-03 0.00000000e+00 
+      </Histogram>
+    </PDF>
+    <PDF Name="Fisher_PDFBkg" MinNSmooth="10" MaxNSmooth="10" InterpolMethod="2" KDE_type="1" KDE_iter="1" KDE_border="1" KDE_finefactor="1.0000000000000000e+00">
+      <Histogram Name="Fisher_tr_B_original" NBins="50" XMin="-1.6680936813354492e+00" XMax="1.6556574106216431e+00" HasEquidistantBins="1">
+        1.20345955e-02 4.81383821e-02 5.41556798e-02 1.92553528e-01 2.64761101e-01 3.06882186e-01 5.23504905e-01 5.95712478e-01 5.41556798e-01 8.60473580e-01 9.32681153e-01 8.06317900e-01 7.88266007e-01 6.85971945e-01 6.73937349e-01 7.28093029e-01 5.83677883e-01 5.05453012e-01 4.69349225e-01 5.11470310e-01 4.57314630e-01 3.49003270e-01 3.91124354e-01 3.00864888e-01 3.73072461e-01 4.03158950e-01 2.70778399e-01 2.40691910e-01 2.88830292e-01 2.34674613e-01 2.16622719e-01 2.46709208e-01 1.98570826e-01 2.34674613e-01 1.26363253e-01 1.50432444e-01 1.32380551e-01 7.82248709e-02 1.08311360e-01 4.21210843e-02 5.41556798e-02 1.80518933e-02 1.80518933e-02 1.20345955e-02 6.01729776e-03 6.01729776e-03 0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00 
+      </Histogram>
+    </PDF>
+  </MVAPdfs>
+  <Weights NCoeff="6">
+    <Coefficient Index="0" Value="-1.7823013992052616e+00"/>
+    <Coefficient Index="1" Value="5.3882836378444277e-01"/>
+    <Coefficient Index="2" Value="4.1304869170534120e-01"/>
+    <Coefficient Index="3" Value="-8.4934327670217330e-03"/>
+    <Coefficient Index="4" Value="2.8428010625743177e-01"/>
+    <Coefficient Index="5" Value="3.3145452504248618e-01"/>
+  </Weights>
+</MethodSetup>
